@@ -1,0 +1,163 @@
+<div class="row">
+    <!-- FAQ CHATBOT TITLE -->
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb30 text-center">
+        <h2>FAQ CHATBOT</h2>
+    </div>
+</div>
+
+<!-- CHATBOT MENU -->
+<div class="menu">
+    <div class="row" style="margin-bottom: 20px;">
+        <!-- DROPDOWN SELECTION DATASET -->
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label class="control-label required" for="select">Dataset</label>
+                <div class="select">
+                    <select id="select" class="form-control" name="dataset" [(ngModel)]="dataset">
+                        <option *ngFor="let dataset of datasets" [value]="dataset">
+                            {{dataset}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- DROPDOWN SELECTION TOP K -->
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label class="control-label required" for="select">Top K</label>
+                <div class="select">
+                    <select id="select" class="form-control" name="top_k" [(ngModel)]="top_k">
+                        <option *ngFor="let top_k of top_k_options" [value]="top_k">
+                            {{top_k}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <!-- RADIO BUTTON SELECTION LOSS TYPE -->
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 mb30 text-center">
+            <form action="" data-toggle="validator">
+                <label class="control-label required" for="select">Loss Type</label>
+                <div class="form-inline required">
+                    <div class="form-group has-feedback" *ngFor="let ltype of loss_types" style="margin-right: 5px;">
+                        <label class="input-group">
+                            <span class="input-group-addon">
+                                <input type="radio" name="ltype" [(ngModel)]="loss_type" [value]="ltype" />
+                            </span>
+                            <div class="form-control form-control-static">
+                                {{ltype}}
+                            </div>
+                            <span class="glyphicon form-control-feedback "></span>
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- RADIO BUTTON SELECTION NEGATIVE TYPE -->
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 mb30 text-center">
+            <form action="" data-toggle="validator">
+                <label class="control-label required" for="select">Negative Type</label>
+                <div class="form-inline required">
+                    <div class="form-group has-feedback" *ngFor="let ntype of neg_types" style="margin-right: 5px;">
+                        <label class="input-group">
+                            <span class="input-group-addon">
+                                <input type="radio" name="ntype" [(ngModel)]="neg_type" [value]="ntype" />
+                            </span>
+                            <div class="form-control form-control-static">
+                                {{ntype}}
+                            </div>
+                            <span class="glyphicon form-control-feedback "></span>
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- RADIO BUTTON SELECTION QUERY TYPE -->
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-4 mb30 text-center">
+            <form action="" data-toggle="validator">
+                <label class="control-label required" for="select">Query Type</label>
+                <div class="form-inline required">
+                    <div class="form-group has-feedback" *ngFor="let qtype of query_types" style="margin-right: 5px;">
+                        <label class="input-group">
+                            <span class="input-group-addon">
+                                <input type="radio" name="qtype" [(ngModel)]="query_type" [value]="qtype" />
+                            </span>
+                            <div class="form-control form-control-static">
+                                {{qtype}}
+                            </div>
+                            <span class="glyphicon form-control-feedback "></span>
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <!-- CHATBOT SECTION -->
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb30 text-center">
+        <div class="panel panel-default">
+
+            <div class="box box-success direct-chat direct-chat-success">
+                <div class="box-body">
+                    <!-- Conversations are loaded here -->
+                    <div class="direct-chat-messages" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+
+                        <ng-container *ngFor="let chat of chats">
+                            <!-- Message. Default to the left -->
+                            <div class="direct-chat-msg" *ngIf="chat?.type =='bot' && !chat?.isMe ">
+                                <div class="direct-chat-info clearfix">
+                                    <span class="direct-chat-name pull-left" style="margin-left: 10px;"> Bot</span>
+                                </div>
+                                <!-- /.direct-chat-info -->
+                                <img class="direct-chat-img" src="../../../assets/img/bot.png" alt="Message User Image">
+                                <!-- /.direct-chat-img -->
+                                <div class="direct-chat-text" style=" display: flex; justify-content: space-between;">
+                                    {{ chat.message[0]?.answer }}
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            <!-- /.direct-chat-msg -->
+
+                            <!-- Message to the right -->
+                            <div class="direct-chat-msg right" *ngIf="chat?.type !=='bot' && chat?.isMe">
+                                <div class="direct-chat-info clearfix">
+                                    <span class="direct-chat-name pull-right" style="margin-right:13px;">Me</span>
+                                </div>
+                                <!-- /.direct-chat-info -->
+                                <img class="direct-chat-img" src="../../../assets/img/user.jpeg"
+                                    alt="Message User Image">
+                                <div class="direct-chat-text" style="float: right">
+                                    {{chat?.message}}
+                                </div>
+                                <!-- /.direct-chat-text -->
+                            </div>
+                            <!-- /.direct-chat-msg -->
+
+                        </ng-container>
+                    </div>
+                    <!--/.direct-chat-messages-->
+                </div>
+
+                <div class="box-footer">
+                    <div class="input-group">
+                        <input type="text" name="message" [(ngModel)]="message" (keyup.enter)="sendMessage()"
+                            placeholder="Type Message ..." class="form-control">
+                        <span class="input-group-btn">
+                            <button (click)="sendMessage()" class="btn btn-success btn-flat">Send</button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
