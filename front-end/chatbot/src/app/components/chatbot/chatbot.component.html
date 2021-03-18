@@ -153,7 +153,7 @@
                         <input type="text" name="message" [(ngModel)]="message" (keyup.enter)="sendMessage()"
                             placeholder="Type Message ..." class="form-control">
                         <span class="input-group-btn">
-                            <button (click)="sendMessage()" class="btn btn-success btn-flat">Send</button>
+                            <button (click)="sendMessage()" class="btn btn-success btn-flat" [disabled]="message === ''">Send</button>
                         </span>
                     </div>
                 </div>

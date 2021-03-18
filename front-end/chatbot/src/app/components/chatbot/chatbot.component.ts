@@ -24,7 +24,7 @@ export class ChatbotComponent implements OnInit {
 
   conversation = new Subject<Chat[]>();
   chats: Chat[] = [];
-  message: any;
+  message: string = "";
 
   neg_types = ['Simple', 'Hard'];
   loss_types = ['Softmax', 'Triplet'];
@@ -95,6 +95,4 @@ export class ChatbotComponent implements OnInit {
   ngAfterContentChecked() {
     this.cdref.detectChanges();    
   }
-
-
 }
