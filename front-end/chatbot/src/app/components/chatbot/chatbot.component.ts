@@ -20,6 +20,7 @@ export class ChatbotComponent implements OnInit {
   loss_type: string = "";
   neg_type: string = "";
   query_type: string = "";
+  field: string = "";
   top_k: number = 0;
 
   conversation = new Subject<Chat[]>();
@@ -29,6 +30,7 @@ export class ChatbotComponent implements OnInit {
   neg_types = ['Simple', 'Hard'];
   loss_types = ['Softmax', 'Triplet'];
   query_types = ['FAQ', 'USER_QUERY'];
+  fields = ['question', 'answer', 'question_answer']
   datasets: any[] = ['CovidFAQ', 'FAQIR', 'StackFAQ'];
   top_k_options: any[] = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100];
 
@@ -42,6 +44,7 @@ export class ChatbotComponent implements OnInit {
     this.neg_type = "Hard";
     this.query_type = "USER_QUERY";
     this.dataset = "CovidFAQ";
+    this.field = "question_answer"
 
     // Display default welcome message in chat section
     let userMessage_default = { message: '', isMe: false, type: '' }
@@ -76,6 +79,7 @@ export class ChatbotComponent implements OnInit {
 
     let params = {
       "top_k": this.top_k,
+      "field": this.field,
       "query_string": this.message,
       "loss_type": this.loss_type,
       "neg_type": this.neg_type,

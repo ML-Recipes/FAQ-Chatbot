@@ -9,7 +9,7 @@
 <div class="menu">
     <div class="row" style="margin-bottom: 20px;">
         <!-- DROPDOWN SELECTION DATASET -->
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
             <div class="form-group">
                 <label class="control-label required" for="select">Dataset</label>
                 <div class="select">
@@ -22,8 +22,22 @@
             </div>
         </div>
 
+        <!-- DROPDOWN SELECTION ELASTICSEARCH FIELD-->
+        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
+            <div class="form-group">
+                <label class="control-label required" for="select">Matching Field</label>
+                <div class="select">
+                    <select id="select" class="form-control" name="field" [(ngModel)]="field">
+                        <option *ngFor="let field of fields" [value]="field">
+                            {{field}}
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
         <!-- DROPDOWN SELECTION TOP K -->
-        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+        <div class="col-xl-4 col-lg-4 col-md-12 col-sm-12 col-12">
             <div class="form-group">
                 <label class="control-label required" for="select">Top K</label>
                 <div class="select">
