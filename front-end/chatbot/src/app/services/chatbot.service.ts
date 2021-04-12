@@ -16,6 +16,10 @@ export class ChatbotService {
     this.chatbotData$ = this.chatbotDataSubject.asObservable();
   }
 
+  get_index_list(dataset: any): Observable<any> {
+    return this.http.get(this.appConfig.apiUrl + "/api/chatbot/search/" + dataset)
+  }
+
   send_message(data: any) {
     return this.http.post(this.appConfig.apiUrl + "/api/chatbot/", data)
   }
