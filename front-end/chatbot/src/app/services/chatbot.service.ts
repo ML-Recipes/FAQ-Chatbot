@@ -17,7 +17,7 @@ export class ChatbotService {
   }
 
   send_message(data: any) {
-    return this.http.post(this.appConfig.apiUrl + "/api/bert/", data)
+    return this.http.post(this.appConfig.apiUrl + "/api/chatbot/", data)
   }
 
 }
