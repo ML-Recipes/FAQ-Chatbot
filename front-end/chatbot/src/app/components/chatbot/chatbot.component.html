@@ -1,3 +1,4 @@
+
 <div class="row">
     <!-- FAQ CHATBOT TITLE -->
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb30 text-center">
@@ -13,7 +14,7 @@
             <div class="form-group">
                 <label class="control-label required" for="select">Dataset</label>
                 <div class="select">
-                    <select id="select" class="form-control" name="dataset" [(ngModel)]="dataset">
+                    <select id="select" class="form-control" name="dataset" [(ngModel)]="dataset" (change)='onDatasetSelection($event)' >
                         <option *ngFor="let dataset of datasets" [value]="dataset">
                             {{dataset}}
                         </option>
@@ -116,6 +117,24 @@
 
 </div>
 
+<div class="row" style="margin-bottom: 50px;">
+    <!-- CHATBOT SECTION -->
+    <div class="container">
+        <ng-template [ngIf]="selectionDataset" [ngIfElse]="noslider">
+            <div  class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb30">
+                <ngx-slider [(value)]="value" [options]="options"></ngx-slider>
+            </div>
+        </ng-template>
+        
+        <ng-template #noslider>
+            
+        </ng-template>  
+    </div>
+   
+</div>
+
+
+    
 <div class="row">
     <!-- CHATBOT SECTION -->
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb30 text-center">
