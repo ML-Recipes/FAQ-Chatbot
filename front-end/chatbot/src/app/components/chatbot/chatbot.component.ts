@@ -66,6 +66,22 @@ export class ChatbotComponent implements OnInit {
   constructor(private chatbotService: ChatbotService, private cdref: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+
+
+    this.chatbotService.get_index_list("covidfaq").subscribe(data => {
+      this.selectionDataset = data
+    
+      this.options = {
+        showTicks: true,
+        showTicksValues: true,
+        stepsArray: this.selectionDataset.map((s: any): CustomStepDefinition => {
+          return { value: s.value, legend: s.legend + " <small>DOCS</small>" };
+        }),
+        translate: (value: number, label: LabelType): string => {
+          return this.selectionDataset[value].label;
+        }
+      }
+    })
     
     // Display default values dropdown, radio buttons
     this.top_k = 10;
