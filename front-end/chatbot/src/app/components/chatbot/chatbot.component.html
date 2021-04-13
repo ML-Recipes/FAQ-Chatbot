@@ -14,7 +14,7 @@
             <div class="form-group">
                 <label class="control-label required" for="select">Dataset</label>
                 <div class="select">
-                    <select id="select" class="form-control" name="dataset" [(ngModel)]="dataset" (change)='onDatasetSelection($event)' >
+                    <select id="select" class="form-control" name="dataset" [(ngModel)]="dataset" [disabled]="dataset==='CovidFAQ'" (change)='onDatasetSelection($event)' >
                         <option *ngFor="let dataset of datasets" [value]="dataset">
                             {{dataset}}
                         </option>
@@ -114,6 +114,7 @@
             </form>
         </div>
     </div>
+
 
 </div>
 
