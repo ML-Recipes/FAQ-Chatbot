@@ -17,6 +17,7 @@ export class Chat {
 })
 export class ChatbotComponent implements OnInit {
 
+  selectedDate: string = ""
   dataset: string = "";
   loss_type: string = "";
   neg_type: string = "";
@@ -65,23 +66,9 @@ export class ChatbotComponent implements OnInit {
 
   constructor(private chatbotService: ChatbotService, private cdref: ChangeDetectorRef) { }
 
+  value_label: any = {};
+
   ngOnInit(): void {
-
-
-    this.chatbotService.get_index_list("covidfaq").subscribe(data => {
-      this.selectionDataset = data
-    
-      this.options = {
-        showTicks: true,
-        showTicksValues: true,
-        stepsArray: this.selectionDataset.map((s: any): CustomStepDefinition => {
-          return { value: s.value, legend: s.legend + " <small>DOCS</small>" };
-        }),
-        translate: (value: number, label: LabelType): string => {
-          return this.selectionDataset[value].label;
-        }
-      }
-    })
     
     // Display default values dropdown, radio buttons
     this.top_k = 10;
@@ -90,6 +77,22 @@ export class ChatbotComponent implements OnInit {
     this.query_type = "USER_QUERY";
     this.dataset = "CovidFAQ";
     this.field = "question_answer"
+    
+    this.chatbotService.get_index_list(this.dataset.toLowerCase()).subscribe(data => {
+      this.selectionDataset = data
+      
+      this.options = {
+        showTicks: true,
+        showTicksValues: true,
+        stepsArray: this.selectionDataset.map((s: any): CustomStepDefinition => {
+          this.value_label[s.value] = s.label
+          return { value: s.value, legend: s.legend + " <small>docs</small>" };
+        }),
+        translate: (value: number, label: LabelType): string => {          
+          return this.value_label[value];
+        }
+      }
+    })
 
     // Display default welcome message in chat section
     let userMessage_default = { message: '', isMe: false, type: '' }
@@ -129,13 +132,14 @@ export class ChatbotComponent implements OnInit {
       "loss_type": this.loss_type,
       "neg_type": this.neg_type,
       "query_type": this.query_type,
-      "index_name": this.dataset.toLowerCase() + "_" + this.selectionDataset[this.value].label,
+      "index": this.dataset.toLowerCase() + "_" + this.selectedDate,
       "dataset": this.dataset
     }
 
     let botMessage: any;
     
     this.chatbotService.send_message(params).subscribe(data => {
+      console.log(data)
       botMessage = { message: data, isMe: false, type: 'bot' };
       this.conversation.next([botMessage]);
     });
@@ -147,22 +151,27 @@ export class ChatbotComponent implements OnInit {
 
     this.chatbotService.get_index_list(dataset.toLowerCase()).subscribe(data => {
       this.selectionDataset = data
-    
+
       this.options = {
         showTicks: true,
         showTicksValues: true,
         stepsArray: this.selectionDataset.map((s: any): CustomStepDefinition => {
-          return { value: s.value, legend: s.legend + " <small>DOCS</small>" };
+          this.value_label[s.value] = s.label
+          return { value: s.value, legend: s.legend + " <small>docs</small>" };
         }),
         translate: (value: number, label: LabelType): string => {
-          return this.selectionDataset[value].label;
+          return this.value_label[value];
         }
       }
-    })
-    
+    }) 
+  }
+
+  changeDate(value: number): void {
+    this.selectedDate = this.value_label[value]
   }
 
   ngAfterContentChecked() {
     this.cdref.detectChanges();    
   }
+  
 }

@@ -1,3 +1,7 @@
+
+
+
+
 <div class="row">
     <!-- FAQ CHATBOT TITLE -->
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb30 text-center">
@@ -122,7 +126,7 @@
     <div class="container">
         <ng-template [ngIf]="selectionDataset" [ngIfElse]="noslider">
             <div  class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb30">
-                <ngx-slider [(value)]="value" [options]="options"></ngx-slider>
+                <ngx-slider [(value)]="value" [options]="options" (valueChange)="changeDate($event)"></ngx-slider>
             </div>
         </ng-template>
         
