@@ -162,7 +162,8 @@
                                 <div class="direct-chat-text">
                                     <div class="row">
                                         
-                                        <div *ngIf="chat.message[0]._type == 'welcome'; else bot_message">
+                                        
+                                        <div *ngIf="chat.message[0]._type == 'dialogflow' || chat.message[0]._type == 'welcome' || chat.message[0]._type == 'error'; else bot_message">
                                             
                                             <div class="col-xs-12 col-md-12">
                                                 <div class="comment-text">
@@ -170,25 +171,17 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                        
                                         <ng-template #bot_message>
                                             <div class="col-xs-12 col-md-12">
                                                 <div class="comment-text" style="margin-bottom:4px;">
                                                     {{ chat.message[0]?.answer }}
                                                 </div>
-                                                
-                                                <div>
-                                                    Source: <strong><a href="{{ chat.message[0]?.sourceUrl }}" target="_blank">{{ chat.message[0]?.sourceName }}</a></strong>
-                                                </div>
-                                                <div>
-                                                    Date:   {{ chat.message[0]?.date }}
-                                                </div>
+                                                <div>Source: <strong><a href="{{ chat.message[0]?.sourceUrl }}" target="_blank">{{ chat.message[0]?.sourceName }}</a></strong></div>
+                                                <div>Date:   {{ chat.message[0]?.date }}</div>
                                             </div>
-            
                                         </ng-template>  
-                                        
-                                        
-  
+
                                     </div>
                                 </div>
                                 <!-- /.direct-chat-text -->
