@@ -5,7 +5,7 @@
 <div class="row" style="margin-bottom: 40px;">
     <!-- FAQ CHATBOT TITLE -->
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb30 text-center">
-        <h2>Covid-19 FAQ CHATBOT</h2>
+        <h2>Covid-19 FAQ Chatbot</h2>
     </div>
 </div>
 
@@ -142,7 +142,7 @@
     
 <div class="row">
     <!-- CHATBOT SECTION -->
-    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb30 text-center">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb30">
         <div class="panel panel-default">
 
             <div class="box box-success direct-chat direct-chat-success">
@@ -159,8 +159,37 @@
                                 <!-- /.direct-chat-info -->
                                 <img class="direct-chat-img" src="../../../assets/img/bot.png" alt="Message User Image">
                                 <!-- /.direct-chat-img -->
-                                <div class="direct-chat-text" style=" display: flex; justify-content: space-between;">
-                                    {{ chat.message[0]?.answer }}
+                                <div class="direct-chat-text">
+                                    <div class="row">
+                                        
+                                        <div *ngIf="chat.message[0]._type == 'welcome'; else bot_message">
+                                            
+                                            <div class="col-xs-12 col-md-12">
+                                                <div class="comment-text">
+                                                    {{ chat.message[0]?.answer }}        
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <ng-template #bot_message>
+                                            <div class="col-xs-12 col-md-12">
+                                                <div class="comment-text" style="margin-bottom:4px;">
+                                                    {{ chat.message[0]?.answer }}
+                                                </div>
+                                                
+                                                <div>
+                                                    Source: <strong><a href="{{ chat.message[0]?.sourceUrl }}" target="_blank">{{ chat.message[0]?.sourceName }}</a></strong>
+                                                </div>
+                                                <div>
+                                                    Date:   {{ chat.message[0]?.date }}
+                                                </div>
+                                            </div>
+            
+                                        </ng-template>  
+                                        
+                                        
+  
+                                    </div>
                                 </div>
                                 <!-- /.direct-chat-text -->
                             </div>

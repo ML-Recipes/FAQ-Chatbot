@@ -100,7 +100,7 @@ export class ChatbotComponent implements OnInit {
       message:
         [{
           "_type": "welcome",
-          "answer": "Welcome! I’m your assistant. You can ask me any question. First select a dataset and submit the given options for model prediction at the top of the chatbot section"
+          "answer": "Hi! I am a bot that can answer your questions about Covid-19. Ask me anything."
         }],
 
       isMe: false,
@@ -168,6 +168,10 @@ export class ChatbotComponent implements OnInit {
 
   changeDate(value: number): void {
     this.selectedDate = this.value_label[value]
+  }
+
+  openNewTab(url: string) {
+    window.open(url, '_blank');
   }
 
   ngAfterContentChecked() {
