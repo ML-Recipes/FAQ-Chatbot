@@ -9,6 +9,10 @@
     </div>
 </div>
 
+<hr>
+
+<br>
+
 <!-- CHATBOT MENU -->
 <!-- 
 <div class="menu">
@@ -124,21 +128,24 @@
 
 <div class="row" style="margin-bottom: 50px;">
     <!-- CHATBOT SECTION -->
-    <div class="container">
+
         <ng-template [ngIf]="selectionDataset" [ngIfElse]="noslider">
             <div  class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb30">
-                <ngx-slider [(value)]="value" [options]="options" (valueChange)="changeDate($event)"></ngx-slider>
+                <div class="custom-slider">
+                    <ngx-slider [(value)]="value" [options]="options" (valueChange)="changeDate($event)"></ngx-slider>
+                </div>
             </div>
         </ng-template>
         
         <ng-template #noslider>
             
         </ng-template>  
-    </div>
-   
+
 </div>
 
 
+<div class="alert alert-success" role="alert" *ngIf="selectedDate; else no_selection"><strong>Querying index {{selectedDate}} at {{currentDate | date: 'hh:mm a'}}</strong></div>
+<ng-template #no_selection></ng-template> 
     
 <div class="row">
     <!-- CHATBOT SECTION -->
@@ -167,7 +174,7 @@
                                             
                                             <div class="col-xs-12 col-md-12">
                                                 <div class="comment-text">
-                                                    {{ chat.message[0]?.answer }}        
+                                                    {{ chat.message[0]?.answer }}
                                                 </div>
                                             </div>
                                         </div>

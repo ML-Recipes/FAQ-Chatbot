@@ -25,6 +25,7 @@ export class ChatbotComponent implements OnInit {
   field: string = "";
   top_k: number = 0;
   
+  currentDate = new Date();
   conversation = new Subject<Chat[]>();
   chats: Chat[] = [];
   message: string = "";
@@ -69,7 +70,7 @@ export class ChatbotComponent implements OnInit {
   value_label: any = {};
 
   ngOnInit(): void {
-    
+
     // Display default values dropdown, radio buttons
     this.top_k = 10;
     this.loss_type = "Triplet";
