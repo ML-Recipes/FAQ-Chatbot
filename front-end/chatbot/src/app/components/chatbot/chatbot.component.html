@@ -144,9 +144,12 @@
 </div>
 
 
-<div class="alert alert-success" role="alert" *ngIf="selectedDate; else no_selection"><strong>Querying index {{selectedDate}} at {{currentDate | date: 'hh:mm a'}}</strong></div>
+<div class="alert alert-success" role="alert" *ngIf="selectedDate; else no_selection"><strong>You will get FAQs published in {{selectedDate}} and before.</strong></div>
 <ng-template #no_selection></ng-template> 
-    
+
+<span *ngFor="let t of selectedTopics" class="label label-default">{{t}}
+</span>
+
 <div class="row">
     <!-- CHATBOT SECTION -->
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb30">

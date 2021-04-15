@@ -18,6 +18,7 @@ export class Chat {
 export class ChatbotComponent implements OnInit {
 
   selectedDate: string = ""
+  selectedTopics: any = []
   dataset: string = "";
   loss_type: string = "";
   neg_type: string = "";
@@ -68,6 +69,7 @@ export class ChatbotComponent implements OnInit {
   constructor(private chatbotService: ChatbotService, private cdref: ChangeDetectorRef) { }
 
   value_label: any = {};
+  info: any = {};
 
   ngOnInit(): void {
 
@@ -86,11 +88,15 @@ export class ChatbotComponent implements OnInit {
         showTicks: true,
         showTicksValues: true,
         stepsArray: this.selectionDataset.map((s: any): CustomStepDefinition => {
-          this.value_label[s.value] = s.label
+          this.info = {};
+          this.info['label'] = s.label;
+          this.info['topics'] = s.topics;
+          this.value_label[s.value] = this.info
           return { value: s.value, legend: s.legend + " <small>docs</small>" };
         }),
-        translate: (value: number, label: LabelType): string => {          
-          return this.value_label[value];
+        translate: (value: number, label: LabelType): string => {
+          this.info = this.value_label[value]
+          return this.info['label'];
         }
       }
     })
@@ -125,7 +131,6 @@ export class ChatbotComponent implements OnInit {
   getBotAnswer(msg: string) {
     let userMessage = { message: msg, isMe: true, type: 'user' }
     this.conversation.next([userMessage]);
-
     let params = {
       "top_k": this.top_k,
       "field": this.field,
@@ -152,7 +157,7 @@ export class ChatbotComponent implements OnInit {
 
     this.chatbotService.get_index_list(dataset.toLowerCase()).subscribe(data => {
       this.selectionDataset = data
-
+      
       this.options = {
         showTicks: true,
         showTicksValues: true,
@@ -168,9 +173,10 @@ export class ChatbotComponent implements OnInit {
   }
 
   changeDate(value: number): void {
-    this.selectedDate = this.value_label[value]
+    this.info = this.value_label[value]
+    this.selectedDate = this.info['label']
+    this.selectedTopics = this.info['topics']
   }
-
   openNewTab(url: string) {
     window.open(url, '_blank');
   }
