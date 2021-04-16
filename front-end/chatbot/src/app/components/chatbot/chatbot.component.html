@@ -143,12 +143,24 @@
 
 </div>
 
-
-<div class="alert alert-success" role="alert" *ngIf="selectedDate; else no_selection"><strong>You will get FAQs published in {{selectedDate}} and before.</strong></div>
+<div class="alert alert-success" role="alert" *ngIf="selectedDate; else no_selection">
+    <strong>You will get FAQs published until {{selectedDate}}, which are related to these topics:</strong>
+    <br>
+    <ul>
+        <li *ngFor="let item of selectedTopics; let i = index">
+            <small>{{ item }}</small>
+        </li>
+    </ul>
+</div>
 <ng-template #no_selection></ng-template> 
-
-<span *ngFor="let t of selectedTopics" class="label label-default">{{t}}
-</span>
+<!--
+<div class="row">
+    <div class="col-md-12">
+        <span *ngFor="let t of selectedTopics" class="label label-default" style="margin-right: 3px;">{{t}}
+        </span>
+    </div>
+</div>
+-->
 
 <div class="row">
     <!-- CHATBOT SECTION -->
