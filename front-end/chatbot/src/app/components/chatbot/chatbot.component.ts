@@ -17,6 +17,8 @@ export class Chat {
 })
 export class ChatbotComponent implements OnInit {
 
+  startPage: number;
+  paginationLimit: number;
   selectedDate: string = ""
   selectedTopics: any = []
   dataset: string = "";
@@ -66,7 +68,10 @@ export class ChatbotComponent implements OnInit {
     }
   };
 
-  constructor(private chatbotService: ChatbotService, private cdref: ChangeDetectorRef) { }
+  constructor(private chatbotService: ChatbotService, private cdref: ChangeDetectorRef) { 
+    this.startPage = 0;
+    this.paginationLimit = 1;
+  }
 
   value_label: any = {};
   info: any = {};
@@ -83,7 +88,7 @@ export class ChatbotComponent implements OnInit {
     
     this.chatbotService.get_index_list(this.dataset.toLowerCase()).subscribe(data => {
       this.selectionDataset = data
-      
+    
       this.options = {
         showTicks: true,
         showTicksValues: true,
@@ -183,6 +188,13 @@ export class ChatbotComponent implements OnInit {
 
   ngAfterContentChecked() {
     this.cdref.detectChanges();    
+  }
+
+  showMore() {
+    this.paginationLimit = Number(this.paginationLimit) + 3;
+  }
+  showLess() {
+    this.paginationLimit = Number(this.paginationLimit) - 3;
   }
   
 }

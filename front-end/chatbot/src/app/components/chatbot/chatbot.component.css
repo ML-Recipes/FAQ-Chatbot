@@ -505,3 +505,10 @@ radio-toolbar {
     padding: 40px; 
     margin-bottom: 20px; 
 }
+
+#botmessage {
+    border: 2px solid rgb(74, 73, 73);
+    padding: 10px;
+    border-radius: 25px;
+    margin-bottom:5px;
+  }

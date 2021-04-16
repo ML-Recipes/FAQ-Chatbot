@@ -1,7 +1,3 @@
-
-
-
-
 <div class="row" style="margin-bottom: 40px;">
     <!-- FAQ CHATBOT TITLE -->
     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 mb30 text-center">
@@ -146,11 +142,16 @@
 <div class="alert alert-success" role="alert" *ngIf="selectedDate; else no_selection">
     <strong>You will get FAQs published until {{selectedDate}}, which are related to these topics:</strong>
     <br>
-    <ul>
-        <li *ngFor="let item of selectedTopics; let i = index">
-            <small>{{ item }}</small>
-        </li>
-    </ul>
+    <br>
+    <div class="row">
+        <div class="col-md-3" *ngFor="let item of selectedTopics; let i = index">
+            <ul>
+                <li >
+                    <small>{{ item }}</small>
+                </li>
+            </ul>
+        </div>
+    </div>
 </div>
 <ng-template #no_selection></ng-template> 
 <!--
@@ -182,29 +183,37 @@
                                 <img class="direct-chat-img" src="../../../assets/img/bot.png" alt="Message User Image">
                                 <!-- /.direct-chat-img -->
                                 <div class="direct-chat-text">
-                                    <div class="row">
+                                    
+                                    <!-- CHECK IF BOT ANSWER CONTAINS MORE THAN 1 MESSAGE -->
+                                    <div *ngIf="(chat?.message)?.length > 1; else one_message ">
                                         
-                                        
-                                        <div *ngIf="chat.message[0]._type == 'dialogflow' || chat.message[0]._type == 'welcome' || chat.message[0]._type == 'error'; else bot_message">
-                                            
-                                            <div class="col-xs-12 col-md-12">
-                                                <div class="comment-text">
-                                                    {{ chat.message[0]?.answer }}
+                                       
+                                        <!-- LOOP THROUGH ALL BOT ANSWERS AND DISPLAY SHOW MORE OR SHOW LESS BUTTON -->
+                                        <!-- IN CASE MORE THAN 3 RESULTS ARE RETURNED --> 
+                                        <div *ngFor="let result of chat.message | slice : startPage:paginationLimit let i = index;">
+                                          
+                                            <div id="botmessage">
+                                                <div class="comment-text" style="margin-bottom:3px;">
+                                                    {{i + 1}}) {{ chat.message[i]?.answer }}
                                                 </div>
+                                                <div>Source: <strong><a href="{{ chat.message[0]?.sourceUrl }}" target="_blank">{{ chat.message[i]?.sourceName }}</a></strong></div>
+                                                <div>Date:   {{ chat.message[i]?.date }}</div>
+                                                <div>Score:  {{ chat.message[i]?.score }}</div>
                                             </div>
                                         </div>
-                                        
-                                        <ng-template #bot_message>
-                                            <div class="col-xs-12 col-md-12">
-                                                <div class="comment-text" style="margin-bottom:4px;">
-                                                    {{ chat.message[0]?.answer }}
-                                                </div>
-                                                <div>Source: <strong><a href="{{ chat.message[0]?.sourceUrl }}" target="_blank">{{ chat.message[0]?.sourceName }}</a></strong></div>
-                                                <div>Date:   {{ chat.message[0]?.date }}</div>
-                                            </div>
-                                        </ng-template>  
 
+                                        <button class="btn-sm btn-default" style="border-radius: 12px; margin-right:5px;" *ngIf=" paginationLimit < (chat.message).length" (click)="showMore()">
+                                            Show More
+                                        </button>
+                                        <button class="btn-sm btn-default" style="border-radius: 12px;" *ngIf="paginationLimit > 1" (click)="showLess()">
+                                            Show Less
+                                        </button> 
                                     </div>
+
+                                    <!-- CHECK IF BOT ANSWER CONTAINS ONE MESSAGE DISPLAY (WELCOME, ERROR OR DIALOGFLOW MESSAGE) -->
+                                    <ng-template #one_message>
+                                        {{chat.message[0].answer}}
+                                    </ng-template>
                                 </div>
                                 <!-- /.direct-chat-text -->
                             </div>
