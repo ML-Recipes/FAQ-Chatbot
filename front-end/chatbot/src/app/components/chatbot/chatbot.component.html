@@ -196,9 +196,9 @@
                                                 <div class="comment-text" style="margin-bottom:3px;">
                                                     {{i + 1}}) {{ chat.message[i]?.answer }}
                                                 </div>
-                                                <div>Source: <strong><a href="{{ chat.message[0]?.sourceUrl }}" target="_blank">{{ chat.message[i]?.sourceName }}</a></strong></div>
-                                                <div>Date:   {{ chat.message[i]?.date }}</div>
-                                                <div>Score:  {{ chat.message[i]?.score }}</div>
+                                                <div>-- By <strong><a href="{{ chat.message[0]?.sourceUrl }}" target="_blank">{{ chat.message[i]?.sourceName }}, {{ chat.message[i]?.date }}</a></strong></div>
+                                                <!--<div>Date:   {{ chat.message[i]?.date }}</div>
+                                                <div>Score:  {{ chat.message[i]?.score }}</div>-->
                                             </div>
                                         </div>
 

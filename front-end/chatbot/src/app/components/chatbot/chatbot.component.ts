@@ -191,10 +191,10 @@ export class ChatbotComponent implements OnInit {
   }
 
   showMore() {
-    this.paginationLimit = Number(this.paginationLimit) + 3;
+    this.paginationLimit = Number(this.paginationLimit) + 1;
   }
   showLess() {
-    this.paginationLimit = Number(this.paginationLimit) - 3;
+    this.paginationLimit = Number(this.paginationLimit) - 1;
   }
   
 }
